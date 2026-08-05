@@ -264,7 +264,7 @@
             .then(data => {
                 if (data.success) {
                     document.getElementById("email").value = data.email;
-                    document.getElementById("name").value = data.name;
+                    document.getElementById("name").value = data.realName;
                     document.getElementById("user-info").value = `学年:${data.grade}  クラス:${data.clazz}  出席番号:${data.number}  氏名:${data.realName}  学籍番号:${data.studentId}`;
                 } else {
                     alert("Google認証エラー\n" + data.error);
