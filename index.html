@@ -5,366 +5,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blive 登録</title>
-
-    <!-- Google Identity Services (GSI) スクリプト -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; padding: 20px;
             font-family: "Segoe UI", sans-serif;
             background: linear-gradient(135deg, #111827, #1f2937, #111827);
             color: white;
         }
-
         .card {
-            width: 100%;
-            max-width: 460px;
+            width: 100%; max-width: 460px;
             background: rgba(255, 255, 255, .08);
             backdrop-filter: blur(18px);
             border: 1px solid rgba(255, 255, 255, .12);
-            border-radius: 22px;
-            padding: 35px;
+            border-radius: 22px; padding: 35px;
             box-shadow: 0 20px 45px rgba(0, 0, 0, .35);
-            animation: fade .5s;
         }
-
-        @keyframes fade {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: none;
-            }
-        }
-
-        .logo {
-            font-size: 52px;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            text-align: center;
-            font-size: 30px;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #9ca3af;
-            margin-bottom: 25px;
-            font-size: 15px;
-        }
-
-        /* Google ログインボタン用のエリア */
-        .google-btn-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
-
+        .logo { font-size: 52px; text-align: center; margin-bottom: 10px; }
+        h2 { text-align: center; font-size: 30px; margin-bottom: 8px; }
+        .subtitle { text-align: center; color: #9ca3af; margin-bottom: 25px; font-size: 15px; }
+        .google-btn-container { display: flex; justify-content: center; margin-bottom: 25px; }
         .divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: #6b7280;
-            font-size: 13px;
-            margin-bottom: 20px;
+            display: flex; align-items: center; text-align: center;
+            color: #6b7280; font-size: 13px; margin-bottom: 20px;
         }
-
         .divider::before, .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            content: ''; flex: 1; border-bottom: 1px solid rgba(255, 255, 255, 0.15);
         }
-
         .divider::before { margin-right: .5em; }
         .divider::after { margin-left: .5em; }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #d1d5db;
-        }
-
+        .form-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: #d1d5db; }
         input {
-            width: 100%;
-            padding: 14px;
-            border-radius: 12px;
+            width: 100%; padding: 14px; border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, .15);
-            background: rgba(255, 255, 255, .05);
-            color: white;
-            font-size: 15px;
-            transition: .2s;
+            background: rgba(255, 255, 255, .05); color: white; font-size: 15px;
         }
-
-        input::placeholder {
-            color: #6b7280;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            background: rgba(255, 255, 255, .08);
-            box-shadow: 0 0 15px rgba(59, 130, 246, .45);
-        }
-
-        /* 自動入力された読み取り専用入力欄のスタイル */
-        input:read-only {
-            background: rgba(255, 255, 255, 0.02);
-            color: #9ca3af;
-            border-color: rgba(255, 255, 255, 0.08);
-            cursor: not-allowed;
-        }
-
+        input:focus { outline: none; border-color: #3b82f6; background: rgba(255, 255, 255, .08); }
+        input:read-only { background: rgba(255, 255, 255, 0.02); color: #9ca3af; cursor: not-allowed; }
         button {
-            width: 100%;
-            padding: 15px;
-            margin-top: 12px;
-            border: none;
-            border-radius: 14px;
-            background: #2563eb;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: .25s;
+            width: 100%; padding: 15px; margin-top: 12px; border: none;
+            border-radius: 14px; background: #2563eb; color: white;
+            font-size: 16px; font-weight: bold; cursor: pointer; transition: .25s;
         }
-
-        button:hover {
-            background: #3b82f6;
-            transform: translateY(-2px);
+        button:hover { background: #3b82f6; transform: translateY(-2px); }
+        button:disabled { background: #4b5563; cursor: not-allowed; transform: none; }
+        .waiting-card, .success-card { display: none; text-align: center; }
+        .spinner {
+            width: 60px; height: 60px; margin: 0 auto 20px;
+            border: 5px solid rgba(255,255,255,0.1);
+            border-top-color: #3b82f6; border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
-
-        button:disabled {
-            background: #4b5563;
-            cursor: not-allowed;
-            transform: none;
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .waiting-card p, .success-card p { margin: 20px 0; line-height: 1.8; color: #cbd5e1; }
+        .stream-btn {
+            display: block; width: 100%; padding: 15px; border-radius: 14px;
+            background: #10b981; color: white; text-decoration: none;
+            font-weight: bold; font-size: 16px; transition: .25s; margin-top: 20px;
         }
-
-        .success-card {
-            display: none;
-            text-align: center;
-        }
-
-        .success-icon {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #10b981;
-            font-size: 48px;
-            animation: pop .35s;
-        }
-
-        @keyframes pop {
-            from {
-                transform: scale(.5);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .success-card p {
-            margin: 25px 0;
-            line-height: 1.8;
-            color: #cbd5e1;
-        }
-
-        .mail-link-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            border-radius: 14px;
-            background: #2563eb;
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            transition: .25s;
-        }
-
-        .mail-link-btn:hover {
-            background: #3b82f6;
-            transform: translateY(-2px);
-        }
-
-        @media (max-width: 500px) {
-            .card {
-                padding: 25px;
-            }
-        }
+        .stream-btn:hover { background: #059669; transform: translateY(-2px); }
     </style>
 </head>
-
 <body>
 
+    <!-- 1. 入力フォーム画面 -->
     <div class="card" id="form-container">
-
         <div class="logo">🎥</div>
-
         <h2>Blive</h2>
+        <div class="subtitle">ライブ配信システム登録</div>
 
-        <div class="subtitle">
-            ライブ配信システム登録
-        </div>
-
-        <!-- Google ログインエリア -->
-        <div
-            id="g_id_onload"
-            data-client_id="58094065464-6de6g7hhkv3agjohd3bnhm4ndkurm2ub.apps.googleusercontent.com"
-            data-callback="onGoogleLogin">
-        </div>
-
+        <div id="g_id_onload" data-client_id="58094065464-6de6g7hhkv3agjohd3bnhm4ndkurm2ub.apps.googleusercontent.com" data-callback="onGoogleLogin"></div>
         <div class="google-btn-container">
-            <div
-                class="g_id_signin"
-                data-type="standard"
-                data-size="large"
-                data-theme="filled_black"
-                data-text="signup_with">
-            </div>
+            <div class="g_id_signin" data-type="standard" data-size="large" data-theme="filled_black" data-text="signup_with"></div>
         </div>
 
         <div class="divider">アカウント情報</div>
-
         <div class="form-group">
             <label>メールアドレス</label>
-            <input
-                type="email"
-                id="email"
-                placeholder="Googleログインすると自動入力されます"
-                readonly
-                required>
+            <input type="email" id="email" placeholder="Googleログインすると自動入力されます" readonly required>
         </div>
-
         <div class="form-group">
             <label>氏名</label>
-            <input
-                type="text"
-                id="name"
-                placeholder="Googleログインすると自動入力されます"
-                readonly
-                required>
+            <input type="text" id="name" placeholder="Googleログインすると自動入力されます" readonly required>
         </div>
-
         <div class="form-group">
             <label>学年</label>
-            <input
-                type="text"
-                id="grade"
-                placeholder="例: 1"
-                required>
+            <input type="text" id="grade" placeholder="例: 1" required>
         </div>
-
         <div class="form-group">
             <label>クラス</label>
-            <input
-                type="text"
-                id="clazz"
-                placeholder="例: A"
-                required>
+            <input type="text" id="clazz" placeholder="例: A" required>
         </div>
-
         <div class="form-group">
             <label>学籍番号</label>
-            <input
-                type="text"
-                id="number"
-                placeholder="例: s25000"
-                required>
+            <input type="text" id="number" placeholder="例: s25000" required>
         </div>
-
-        <button id="submit-btn" onclick="sendData()">
-            登録する
-        </button>
-
+        <button id="submit-btn" onclick="sendData()">登録する</button>
     </div>
 
-    <div class="card success-card" id="success-container">
-
+    <!-- 2. しばらくお待ちください（URL生成待ち）画面 -->
+    <div class="card waiting-card" id="waiting-container">
         <div class="logo">🎥</div>
-
-        <div class="success-icon">
-            ✓
-        </div>
-
-        <h2>登録完了！</h2>
-
+        <div class="spinner"></div>
+        <h2>しばらくお待ちください</h2>
         <p>
-            登録ありがとうございます。<br>
-            メールアドレス宛に専用アクセスURLを送信しました。<br><br>
-            メールをご確認のうえ、Bliveへアクセスしてください。
+            配信サーバー（ラズパイ）に接続し、<br>
+            専用の視聴URLを発行しています...<br>
+            <span style="font-size: 13px; color: #9ca3af;">（自動で画面が切り替わります）</span>
         </p>
+    </div>
 
-        <a
-            href="https://mail.google.com/"
-            target="_blank"
-            class="mail-link-btn">
-            Gmailを開く
-        </a>
-
+    <!-- 3. 登録完了・視聴URLボタン表示画面 -->
+    <div class="card success-card" id="success-container">
+        <div class="logo">🎥</div>
+        <h2 style="color: #10b981;">準備完了！</h2>
+        <p>専用アクセスURLが発行されました。</p>
+        <a id="stream-link" href="#" target="_blank" class="stream-btn">配信視聴ルームへ入る</a>
     </div>
 
     <script>
-        // ★ デプロイしたGASのウェブアプリURL(/exec)を貼り付けてください
-        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxBYZePDya15geORvzS-Cw5JU2XaEDth1FvZNZvwop1Asp8MXc0Au_4mwAI7nP85eIZ/exec";
+        const GAS_WEB_APP_URL = "ここにGASのデプロイURL(/exec)を貼り付け";
+        let idToken = "";
 
-        let idToken = ""; // Googleから取得したトークンを保持
-
-        // Google ログイン成功時のコールバック関数
         function onGoogleLogin(response) {
             idToken = response.credential;
-
-            // GASへトークンを送ってユーザー情報を検証・取得する
             fetch(GAS_WEB_APP_URL, {
                 method: "POST",
-                body: JSON.stringify({
-                    action: "verifyToken",
-                    token: idToken
-                })
+                body: JSON.stringify({ action: "verifyToken", token: idToken })
             })
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    // メールアドレスと名前をフォームにセット
                     document.getElementById("email").value = data.email;
                     document.getElementById("name").value = data.name;
                 } else {
                     alert("Google認証エラー: " + data.error);
                 }
             })
-            .catch(err => {
-                alert("Google認証時の通信エラーが発生しました。");
-                console.error(err);
-            });
+            .catch(err => alert("通信エラーが発生しました。"));
         }
 
-        // 登録ボタン押下時の送信処理
         function sendData() {
             const data = {
                 action: "submitForm",
@@ -380,17 +163,14 @@
                 alert("最初に「Googleで登録」ボタンからログインを行ってください。");
                 return;
             }
-
             if (!data.grade || !data.clazz || !data.number) {
                 alert("学年・クラス・学籍番号をすべて入力してください。");
                 return;
             }
 
-            const submitBtn = document.getElementById("submit-btn");
-            submitBtn.disabled = true;
-            submitBtn.innerText = "送信中...";
+            document.getElementById("form-container").style.display = "none";
+            document.getElementById("waiting-container").style.display = "block";
 
-            // GASへフォームデータをPOST送信
             fetch(GAS_WEB_APP_URL, {
                 method: "POST",
                 body: JSON.stringify(data)
@@ -398,22 +178,39 @@
             .then(res => res.json())
             .then(resData => {
                 if (resData.success) {
-                    document.getElementById("form-container").style.display = "none";
-                    document.getElementById("success-container").style.display = "block";
+                    pollForTunnelUrl(resData.row);
                 } else {
-                    alert("エラーが発生しました: " + resData.error);
-                    submitBtn.disabled = false;
-                    submitBtn.innerText = "登録する";
+                    alert("エラー: " + resData.error);
+                    location.reload();
                 }
             })
             .catch(err => {
-                alert("エラーが発生しました。もう一度お試しください。");
-                console.error(err);
-                submitBtn.disabled = false;
-                submitBtn.innerText = "登録する";
+                alert("通信エラーが発生しました。");
+                location.reload();
             });
         }
-    </script>
 
+        function pollForTunnelUrl(rowNumber) {
+            const intervalId = setInterval(() => {
+                fetch(GAS_WEB_APP_URL, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        action: "checkStatus",
+                        row: rowNumber
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ready) {
+                        clearInterval(intervalId);
+                        document.getElementById("stream-link").href = data.tunnel_url;
+                        document.getElementById("waiting-container").style.display = "none";
+                        document.getElementById("success-container").style.display = "block";
+                    }
+                })
+                .catch(err => console.error("ステータス確認中...", err));
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
