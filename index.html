@@ -82,7 +82,7 @@
             <div class="g_id_signin" data-type="standard" data-size="large" data-theme="filled_black" data-text="signup_with"></div>
         </div>
 
-        <div class="divider">アカウント情報</div>
+        <div class="divider">アカウント情報（自動抽出）</div>
         <div class="form-group">
             <label>メールアドレス</label>
             <input type="email" id="email" placeholder="Googleログインすると自動入力されます" readonly required>
@@ -93,17 +93,17 @@
         </div>
         <div class="form-group">
             <label>学年</label>
-            <input type="text" id="grade" placeholder="例: 1" required>
+            <input type="text" id="grade" placeholder="Googleログインすると自動入力されます" readonly required>
         </div>
         <div class="form-group">
             <label>クラス</label>
-            <input type="text" id="clazz" placeholder="例: A" required>
+            <input type="text" id="clazz" placeholder="Googleログインすると自動入力されます" readonly required>
         </div>
         <div class="form-group">
             <label>学籍番号</label>
-            <input type="text" id="number" placeholder="例: s25000" required>
+            <input type="text" id="number" placeholder="Googleログインすると自動入力されます" readonly required>
         </div>
-        <button id="submit-btn" onclick="sendData()">登録する</button>
+        <button id="submit-btn" onclick="sendData()" disabled>Googleでログインしてください</button>
     </div>
 
     <!-- 2. しばらくお待ちください（URL生成待ち）画面 -->
@@ -139,8 +139,26 @@
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
+                    // メールアドレスの@の前を学籍番号に設定
+                    const emailPrefix = data.email.split('@')[0];
                     document.getElementById("email").value = data.email;
-                    document.getElementById("name").value = data.name;
+                    document.getElementById("number").value = emailPrefix;
+
+                    // Googleアカウント名のパース処理
+                    // 1文字目: 学年, 2文字目: クラス, 3・4文字目: 出席番号(スキップ), 5文字目以降: 氏名
+                    const rawName = data.name;
+                    if (rawName.length >= 5) {
+                        document.getElementById("grade").value = rawName.charAt(0);
+                        document.getElementById("clazz").value = rawName.charAt(1);
+                        document.getElementById("name").value = rawName.substring(4);
+                    } else {
+                        document.getElementById("name").value = rawName;
+                    }
+
+                    // 登録ボタンを有効化
+                    const submitBtn = document.getElementById("submit-btn");
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "登録する";
                 } else {
                     alert("Google認証エラー: " + data.error);
                 }
@@ -161,10 +179,6 @@
 
             if (!idToken || !data.email || !data.name) {
                 alert("最初に「Googleで登録」ボタンからログインを行ってください。");
-                return;
-            }
-            if (!data.grade || !data.clazz || !data.number) {
-                alert("学年・クラス・学籍番号をすべて入力してください。");
                 return;
             }
 
