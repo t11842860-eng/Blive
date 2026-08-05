@@ -1,334 +1,334 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <base target="_top">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blive 登録</title>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blive 登録</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            font-family: "Segoe UI", sans-serif;
-            background: linear-gradient(135deg, #111827, #1f2937, #111827);
-            color: white;
-        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            font-family: "Segoe UI", sans-serif;
+            background: linear-gradient(135deg, #111827, #1f2937, #111827);
+            color: white;
+        }
 
-        .card {
-            width: 100%;
-            max-width: 460px;
-            background: rgba(255, 255, 255, .08);
-            backdrop-filter: blur(18px);
-            border: 1px solid rgba(255, 255, 255, .12);
-            border-radius: 22px;
-            padding: 35px;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, .35);
-        }
+        .card {
+            width: 100%;
+            max-width: 460px;
+            background: rgba(255, 255, 255, .08);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 22px;
+            padding: 35px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, .35);
+        }
 
-        .logo {
-            font-size: 52px;
-            text-align: center;
-            margin-bottom: 10px;
-        }
+        .logo {
+            font-size: 52px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
 
-        h2 {
-            text-align: center;
-            font-size: 30px;
-            margin-bottom: 8px;
-        }
+        h2 {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
 
-        .subtitle {
-            text-align: center;
-            color: #9ca3af;
-            margin-bottom: 25px;
-            font-size: 15px;
-        }
+        .subtitle {
+            text-align: center;
+            color: #9ca3af;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
 
-        .google-btn-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
+        .google-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
 
-        .divider {
-            display: flex;
-            align-items: center;
-            color: #6b7280;
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
+        .divider {
+            display: flex;
+            align-items: center;
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
 
-        .divider::before,
-        .divider::after {
-            content: "";
-            flex: 1;
-            border-bottom: 1px solid rgba(255, 255, 255, .15);
-        }
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, .15);
+        }
 
-        .divider::before {
-            margin-right: .5em;
-        }
+        .divider::before {
+            margin-right: .5em;
+        }
 
-        .divider::after {
-            margin-left: .5em;
-        }
+        .divider::after {
+            margin-left: .5em;
+        }
 
-        .form-group {
-            margin-bottom: 18px;
-        }
+        .form-group {
+            margin-bottom: 18px;
+        }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #d1d5db;
-        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #d1d5db;
+        }
 
-        input {
-            width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, .15);
-            background: rgba(255, 255, 255, .05);
-            color: white;
-            font-size: 15px;
-        }
+        input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, .15);
+            background: rgba(255, 255, 255, .05);
+            color: white;
+            font-size: 15px;
+        }
 
-        input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            background: rgba(255, 255, 255, .08);
-        }
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(255, 255, 255, .08);
+        }
 
-        input:read-only {
-            background: rgba(255, 255, 255, .02);
-            color: #9ca3af;
-        }
+        input:read-only {
+            background: rgba(255, 255, 255, .02);
+            color: #9ca3af;
+        }
 
-        button {
-            width: 100%;
-            padding: 15px;
-            margin-top: 12px;
-            border: none;
-            border-radius: 14px;
-            background: #2563eb;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: .25s;
-        }
+        button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 12px;
+            border: none;
+            border-radius: 14px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .25s;
+        }
 
-        button:hover {
-            background: #3b82f6;
-            transform: translateY(-2px);
-        }
+        button:hover {
+            background: #3b82f6;
+            transform: translateY(-2px);
+        }
 
-        .waiting-card,
-        .success-card {
-            display: none;
-            text-align: center;
-        }
+        .waiting-card,
+        .success-card {
+            display: none;
+            text-align: center;
+        }
 
-        .spinner {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 20px;
-            border: 5px solid rgba(255, 255, 255, .1);
-            border-top-color: #3b82f6;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
+        .spinner {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            border: 5px solid rgba(255, 255, 255, .1);
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
-        .waiting-card p,
-        .success-card p {
-            margin: 20px 0;
-            line-height: 1.8;
-            color: #cbd5e1;
-        }
+        .waiting-card p,
+        .success-card p {
+            margin: 20px 0;
+            line-height: 1.8;
+            color: #cbd5e1;
+        }
 
-        .stream-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            border-radius: 14px;
-            background: #10b981;
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-            transition: .25s;
-            margin-top: 20px;
-        }
+        .stream-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            border-radius: 14px;
+            background: #10b981;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: .25s;
+            margin-top: 20px;
+        }
 
-        .stream-btn:hover {
-            background: #059669;
-            transform: translateY(-2px);
-        }
-    </style>
+        .stream-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
 <body>
 
-    <!-- 登録画面 -->
-    <div class="card" id="form-container">
-        <div class="logo">🎥</div>
-        <h2>Blive</h2>
-        <div class="subtitle">ライブ配信システム登録</div>
+    <!-- 登録画面 -->
+    <div class="card" id="form-container">
+        <div class="logo">🎥</div>
+        <h2>Blive</h2>
+        <div class="subtitle">ライブ配信システム登録</div>
 
-        <div id="g_id_onload"
-             data-client_id="58094065464-6de6g7hhkv3agjohd3bnhm4ndkurm2ub.apps.googleusercontent.com"
-             data-callback="onGoogleLogin">
-        </div>
+        <div id="g_id_onload"
+             data-client_id="58094065464-6de6g7hhkv3agjohd3bnhm4ndkurm2ub.apps.googleusercontent.com"
+             data-callback="onGoogleLogin">
+        </div>
 
-        <div class="google-btn-container">
-            <div class="g_id_signin"
-                 data-type="standard"
-                 data-size="large"
-                 data-theme="filled_black"
-                 data-text="signup_with">
-            </div>
-        </div>
+        <div class="google-btn-container">
+            <div class="g_id_signin"
+                 data-type="standard"
+                 data-size="large"
+                 data-theme="filled_black"
+                 data-text="signup_with">
+            </div>
+        </div>
 
-        <div class="divider">登録情報</div>
+        <div class="divider">登録情報</div>
 
-        <div class="form-group">
-            <label>メールアドレス</label>
-            <input id="email" readonly placeholder="Googleログインしてください">
-        </div>
+        <div class="form-group">
+            <label>メールアドレス</label>
+            <input id="email" readonly placeholder="Googleログインしてください">
+        </div>
 
-        <div class="form-group">
-            <label>氏名</label>
-            <input id="name" readonly placeholder="Googleログインしてください">
-        </div>
+        <div class="form-group">
+            <label>氏名</label>
+            <input id="name" readonly placeholder="Googleログインしてください">
+        </div>
 
-        <div class="form-group">
-            <label>自動取得情報</label>
-            <input id="user-info" readonly placeholder="Googleログイン後表示されます">
-        </div>
+        <div class="form-group">
+            <label>自動取得情報</label>
+            <input id="user-info" readonly placeholder="Googleログイン後表示されます">
+        </div>
 
-        <button onclick="sendData()">登録する</button>
-    </div>
+        <button onclick="sendData()">登録する</button>
+    </div>
 
-    <!-- 待機画面 -->
-    <div class="card waiting-card" id="waiting-container">
-        <div class="logo">🎥</div>
-        <div class="spinner"></div>
-        <h2>しばらくお待ちください</h2>
-        <p>
-            配信サーバー（ラズパイ）に接続し、<br>
-            専用視聴URLを発行しています...<br>
-            <span style="font-size: 13px; color: #9ca3af;">自動で画面が切り替わります</span>
-        </p>
-    </div>
+    <!-- 待機画面 -->
+    <div class="card waiting-card" id="waiting-container">
+        <div class="logo">🎥</div>
+        <div class="spinner"></div>
+        <h2>しばらくお待ちください</h2>
+        <p>
+            配信サーバー（ラズパイ）に接続し、<br>
+            専用視聴URLを発行しています...<br>
+            <span style="font-size: 13px; color: #9ca3af;">自動で画面が切り替わります</span>
+        </p>
+    </div>
 
-    <!-- 完了画面 -->
-    <div class="card success-card" id="success-container">
-        <div class="logo">🎥</div>
-        <h2 style="color: #10b981;">準備完了！</h2>
-        <p>専用アクセスURLが発行されました。</p>
-        <a id="stream-link" target="_blank" class="stream-btn">配信視聴ルームへ入る</a>
-    </div>
+    <!-- 完了画面 -->
+    <div class="card success-card" id="success-container">
+        <div class="logo">🎥</div>
+        <h2 style="color: #10b981;">準備完了！</h2>
+        <p>専用アクセスURLが発行されました。</p>
+        <a id="stream-link" target="_blank" class="stream-btn">配信視聴ルームへ入る</a>
+    </div>
 
-    <script>
-        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxBYZePDya15geORvzS-Cw5JU2XaEDth1FvZNZvwop1Asp8MXc0Au_4mwAI7nP85eIZ/exec";
-        let idToken = "";
+    <script>
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxBYZePDya15geORvzS-Cw5JU2XaEDth1FvZNZvwop1Asp8MXc0Au_4mwAI7nP85eIZ/exec";
+        let idToken = "";
 
-        function onGoogleLogin(response) {
-            idToken = response.credential;
+        function onGoogleLogin(response) {
+            idToken = response.credential;
 
-            fetch(GAS_WEB_APP_URL, {
-                method: "POST",
-                body: JSON.stringify({
-                    action: "verifyToken",
-                    token: idToken
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById("email").value = data.email;
-                    document.getElementById("name").value = data.name;
-                    document.getElementById("user-info").value = `学年:${data.grade}  クラス:${data.clazz}  出席番号:${data.number}  氏名:${data.realName}  学籍番号:${data.studentId}`;
-                } else {
-                    alert("Google認証エラー\n" + data.error);
-                }
-            })
-            .catch(() => {
-                alert("通信エラーが発生しました");
-            });
-        }
+            fetch(GAS_WEB_APP_URL, {
+                method: "POST",
+                body: JSON.stringify({
+                    action: "verifyToken",
+                    token: idToken
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById("email").value = data.email;
+                    document.getElementById("name").value = data.name;
+                    document.getElementById("user-info").value = `学年:${data.grade}  クラス:${data.clazz}  出席番号:${data.number}  氏名:${data.realName}  学籍番号:${data.studentId}`;
+                } else {
+                    alert("Google認証エラー\n" + data.error);
+                }
+            })
+            .catch(() => {
+                alert("通信エラーが発生しました");
+            });
+        }
 
-        function sendData() {
-            if (!idToken) {
-                alert("Googleログインしてください");
-                return;
-            }
+        function sendData() {
+            if (!idToken) {
+                alert("Googleログインしてください");
+                return;
+            }
 
-            document.getElementById("form-container").style.display = "none";
-            document.getElementById("waiting-container").style.display = "block";
+            document.getElementById("form-container").style.display = "none";
+            document.getElementById("waiting-container").style.display = "block";
 
-            fetch(GAS_WEB_APP_URL, {
-                method: "POST",
-                body: JSON.stringify({
-                    action: "submitForm",
-                    token: idToken
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    pollForTunnelUrl(data.row);
-                } else {
-                    alert(data.error);
-                    location.reload();
-                }
-            })
-            .catch(() => {
-                alert("通信エラー");
-                location.reload();
-            });
-        }
+            fetch(GAS_WEB_APP_URL, {
+                method: "POST",
+                body: JSON.stringify({
+                    action: "submitForm",
+                    token: idToken
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    pollForTunnelUrl(data.row);
+                } else {
+                    alert(data.error);
+                    location.reload();
+                }
+            })
+            .catch(() => {
+                alert("通信エラー");
+                location.reload();
+            });
+        }
 
-        function pollForTunnelUrl(rowNumber) {
-            const timer = setInterval(() => {
-                fetch(GAS_WEB_APP_URL, {
-                    method: "POST",
-                    body: JSON.stringify({
-                        action: "checkStatus",
-                        row: rowNumber
-                    })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.ready) {
-                        clearInterval(timer);
-                        document.getElementById("stream-link").href = data.tunnel_url;
-                        document.getElementById("waiting-container").style.display = "none";
-                        document.getElementById("success-container").style.display = "block";
-                    }
-                })
-                .catch(() => {
-                    console.log("確認中...");
-                });
-            }, 3000);
-        }
-    </script>
+        function pollForTunnelUrl(rowNumber) {
+            const timer = setInterval(() => {
+                fetch(GAS_WEB_APP_URL, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        action: "checkStatus",
+                        row: rowNumber
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ready) {
+                        clearInterval(timer);
+                        document.getElementById("stream-link").href = data.tunnel_url;
+                        document.getElementById("waiting-container").style.display = "none";
+                        document.getElementById("success-container").style.display = "block";
+                    }
+                })
+                .catch(() => {
+                    console.log("確認中...");
+                });
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
