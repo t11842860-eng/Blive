@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Login - GitHub Pages</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f4f6f9;
+            font-family: sans-serif;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            width: 320px;
+        }
+        #user-info {
+            margin-top: 20px;
+        }
+        #user-info img {
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Google ログイン</h2>
+
+    <!-- GCPのクライアントIDを記述 -->
+    <div
+        id="g_id_onload"
+        data-client_id="58094065464-6de6g7hhkv3agjohd3bnhm4ndkurm2ub.apps.googleusercontent.com"
+        data-callback="handleCredentialResponse">
+    </div>
+
+    <div
+        class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline">
+    </div>
+
+    <div id="user-info"></div>
+</div>
+
+<script>
+// ★Step 1でコピーしたGASのウェブアプリURLを貼り付けます
+const GAS_WEB_APP_URL = "ここにGASのURL(/exec)を貼り付け";
+
+function handleCredentialResponse(response) {
+    const userInfoDiv = document.getElementById("user-info");
+    userInfoDiv.innerHTML = "<p>認証・データ保存中...</p>";
+
+    fetch(GAS_WEB_APP_URL, {
+        method: "POST",
+        body: JSON.stringify({
+            token: response.credential
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            userInfoDiv.innerHTML = `
+                <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
+                <img src="${data.picture}" width="80" alt="Icon">
+                <h3 style="margin:5px 0;">${data.name}</h3>
+                <p style="color:#666; font-size:14px; margin:0;">${data.email}</p>
+                <p style="color:green; font-size:12px; margin-top:10px;">✔ スプレッドシートへ記録完了！</p>
+            `;
+        } else {
+            userInfoDiv.innerHTML = `<p style="color:red;">エラー: ${data.error}</p>`;
+        }
+    })
+    .catch(err => {
+        userInfoDiv.innerHTML = `<p style="color:red;">通信エラーが発生しました。</p>`;
+        console.error(err);
+    });
+}
+</script>
+
+</body>
+</html>
