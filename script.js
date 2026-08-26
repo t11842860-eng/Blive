@@ -3,7 +3,6 @@ const GAS_WEB_APP_URL =
 
 let idToken = "";
 
-
 /*
  * Googleログイン完了時
  */
@@ -40,7 +39,6 @@ function onGoogleLogin(response) {
     });
 }
 
-
 /*
  * 登録ボタン
  */
@@ -75,7 +73,6 @@ function sendData() {
     });
 }
 
-
 /*
  * ラズパイ側のURL発行完了を確認
  */
@@ -93,15 +90,13 @@ function pollForTunnelUrl(rowNumber) {
         .then(data => {
             if (data.ready) {
                 clearInterval(timer);
-
-                document.getElementById("stream-link").href =
-                    data.tunnel_url;
-
-                document.getElementById("waiting-container").style.display =
-                    "none";
-
-                document.getElementById("success-container").style.display =
-                    "block";
+                document.getElementById("stream-link").href = data.tunnel_url;
+                document.getElementById("waiting-container").style.display = "none";
+                document.getElementById("success-container").style.display = "block";
+            } else if (data.error) {
+                clearInterval(timer);
+                alert("エラー: " + data.error);
+                location.reload();
             }
         })
         .catch(() => {
